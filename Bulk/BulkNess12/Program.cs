@@ -1,7 +1,14 @@
+using BulkNess12.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register the service from ApplicationDbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options => //<-- Registering the class with Entity Framework.
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // <-- Pass in the connection string "Key" from appsettings.json
 
 var app = builder.Build();
 
