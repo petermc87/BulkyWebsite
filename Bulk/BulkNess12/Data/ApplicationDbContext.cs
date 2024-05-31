@@ -12,5 +12,16 @@ namespace BulkNess12.Data
         }
         // Command for creating Category table.
         public DbSet<Category> Categories { get; set; }
+
+        // Default entity framework builder for seeding
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                // Data that will be seeded to the database
+                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
+                new Category { Id = 2, Name = "Thriller", DisplayOrder = 2 },
+                new Category { Id = 3, Name = "Horror", DisplayOrder = 3 }
+                );
+        }
     }
 }
