@@ -18,7 +18,8 @@ namespace BulkNess12.Controllers
         {
             // Retrieve all the categories as a list and store it in objCategoryList
             List<Category> objCategoryList = _db.Categories.ToList(); // <-- this is typed
-            return View();
+            // Passing the list of categories into the View.
+            return View(objCategoryList);
         }
     }
 }

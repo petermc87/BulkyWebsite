@@ -1,9 +1,29 @@
-﻿<body>
-    <header>
-        <h1>This is Category page</h1>
-        <p>You will really like this page. You actually will not need to go anywhere else on the internet because all your problems will be solved today.</p>
-    </header>
-    <footer>
-        Copyright peter mcgibney 2024
-    </footer>
-</body>
+﻿@model List<Category> // <-- This is the list recieved from CategoryController.cs, in typed format.
+
+<h1>Category</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+           <th>
+               Category Name
+           </th>
+           <th>
+               Display Order
+           </th>
+       </tr>
+    </thead>
+    <tbody>
+        @* This is how you retrieve the list and loop in C# *@
+        @foreach(var obj in Model.OrderBy(u => u.DisplayOrder)) // <-- Here we are ordering the list by display order precendence.
+        {
+            <tr>
+                <td>
+                    @obj.Name
+                </td>
+                <td>
+                    @obj.DisplayOrder
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
