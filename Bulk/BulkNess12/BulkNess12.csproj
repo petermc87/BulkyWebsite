@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Category\Create.cshtml" />
+    <Content Remove="Views\Category\Test.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +25,11 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Category\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Category\Test.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Category\Create.cshtml" />
+    <UpToDateCheckInput Remove="Views\Category\Test.cshtml" />
   </ItemGroup>
 
 </Project>

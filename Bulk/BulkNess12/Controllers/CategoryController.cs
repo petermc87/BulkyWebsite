@@ -1,6 +1,8 @@
 ﻿using BulkNess12.Data;
 using BulkNess12.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BulkNess12.Controllers
 {
