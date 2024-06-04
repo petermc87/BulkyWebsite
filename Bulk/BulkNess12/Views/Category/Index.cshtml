@@ -1,29 +1,47 @@
 ﻿@model List<Category> // <-- This is the list recieved from CategoryController.cs, in typed format.
 
-<h1>Category</h1>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-           <th>
-               Category Name
-           </th>
-           <th>
-               Display Order
-           </th>
-       </tr>
-    </thead>
-    <tbody>
-        @* This is how you retrieve the list and loop in C# *@
-        @foreach(var obj in Model.OrderBy(u => u.DisplayOrder)) // <-- Here we are ordering the list by display order precendence.
-        {
+@* Wrapper container *@
+<div class="container">
+    @* Creating row with padding on top *@
+    <div class="row pt-4 pb-3" >
+        @* This container represents the first 6 rows *@
+        <div class="col-6">
+            @* Use the primary text from the standard stylesheet and have *@
+            @* the text align to the end. *@
+            <h2 class="text-primary">Category List</h2>
+        </div>
+        @* This container represents the last 6 rows *@
+        <div class="col-6 text-end">
+            @* Create category button *@
+            <a asp-controller="CategoryController" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create Category
+            </a>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>
-                    @obj.Name
-                </td>
-                <td>
-                    @obj.DisplayOrder
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+               <th>
+                   Category Name
+               </th>
+               <th>
+                   Display Order
+               </th>
+           </tr>
+        </thead>
+        <tbody>
+            @* This is how you retrieve the list and loop in C# *@
+            @foreach(var obj in Model.OrderBy(u => u.DisplayOrder)) // <-- Here we are ordering the list by display order precendence.
+            {
+                <tr>
+                    <td>
+                        @obj.Name
+                    </td>
+                    <td>
+                        @obj.DisplayOrder
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

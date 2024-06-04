@@ -21,5 +21,10 @@ namespace BulkNess12.Controllers
             // Passing the list of categories into the View.
             return View(objCategoryList);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
