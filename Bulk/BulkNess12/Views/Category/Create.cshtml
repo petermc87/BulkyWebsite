@@ -6,18 +6,22 @@
             <h2 class="text-primary">Create Category</h2>
             <hr/>
         </div>
-        <div class="mb-3 row">
-            <label>Category Name</label>
-            <input type="text"/ class="form-control">
+        @* Make all these "row" bootstrap classes to align with the bottom containers below. *@
+        <div class="mb-3 row p-1">
+            <label class="p-0">Category Name</label>
+            <input type="text" class="form-control">
         </div>
-        <div class="mb-3 row">
-            <label>Display Order</label>
+        <div class="mb-3 row p-1">
+            <label class="p-0">Display Order</label>
             <input type="text" class="form-control"/>
         </div>
         <div class="row">
             <div class="col-6 col-md-3">
                 <button type="submit" class="btn btn-primary form-control">Create</button>
             </div>
+            @* This will take a standard bootstrap width of 6 columns on regular, *@
+            @* but 3 columns on a medium to small size screen. This makes it a *@
+            @* responsive design. *@
             <div class="col-6 col-md-3">
                 @* This button invokes the index controller for the table of categories. *@
                 <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary border form-control">
@@ -25,7 +29,6 @@
                 </a>
             </div>
         </div>
-  
     </div>
 </form>
 
