@@ -8,12 +8,17 @@
         </div>
         @* Make all these "row" bootstrap classes to align with the bottom containers below. *@
         <div class="mb-3 row p-1">
-            <label class="p-0">Category Name</label>
-            <input type="text" class="form-control">
+            @* The asp-for links the "name" property from the Category model.
+            NOTE: You dont need input "type" declaration in the input field
+            because it picks it up directly from the model.
+            NOTE: Label doesnt need 
+            *@
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control">
         </div>
         <div class="mb-3 row p-1">
-            <label class="p-0">Display Order</label>
-            <input type="text" class="form-control"/>
+            <label asp-for="DisplayOrder"></label>
+            <input asp-for="DisplayOrder" class="form-control"/>
         </div>
         <div class="row">
             <div class="col-6 col-md-3">
