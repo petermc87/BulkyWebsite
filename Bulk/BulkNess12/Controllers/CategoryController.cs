@@ -31,6 +31,11 @@ namespace BulkNess12.Controllers
         [HttpPost] // <-- Http request for form posted in the Create.cshtml
         public IActionResult Create(Category obj)
         {
+            if(obj.DisplayOrder.ToString() == obj.Name)
+            {
+
+                ModelState.AddModelError("name", "The Category Name cannot exactly match the Display Order"); //<-- Adding an error message to the "name" part of the Category model when there is a match.
+            }
             if(ModelState.IsValid) // If the validation from the model is correct, then persist to db.
             {
                 _db.Categories.Add(obj); //<-- Pointing to the obj to be saved to the db
