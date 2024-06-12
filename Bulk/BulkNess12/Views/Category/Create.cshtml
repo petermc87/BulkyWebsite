@@ -6,7 +6,9 @@
             <h2 class="text-primary">Create Category</h2>
             <hr/>
         </div>
-        <div asp-validation-summary="All"></div>
+        @* If you change it to ModelOnly, it will only show Model and not property related errors.
+        If you change it to None, it wont show anything in the summary *@
+        @* <div asp-validation-summary="All"></div> *@ @* <--- NOTE: This is not required because we already have individual validations set elsewhere *@
         @* Make all these "row" bootstrap classes to align with the bottom containers below. *@
         <div class="mb-3 row p-1">
             @* The asp-for links the "name" property from the Category model.

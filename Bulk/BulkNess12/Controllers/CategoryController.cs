@@ -34,8 +34,13 @@ namespace BulkNess12.Controllers
             if(obj.DisplayOrder.ToString() == obj.Name)
             {
 
-                ModelState.AddModelError("name", "The Category Name cannot exactly match the Display Order"); //<-- Adding an error message to the "name" part of the Category model when there is a match.
+                ModelState.AddModelError("name", "The Category Name cannot exactly match the Display Order"); //<-- Adding an error message to the "name" HTML element in the front end when there is a match.
             }
+            // --- NOTE:this is not required for the production app -- //
+            //if(obj.Name != null && obj.Name.ToLower() == "test")
+            //{
+            //    ModelState.AddModelError("", "Test is not a valid name"); //<-- We are not binding this to a HTML element, so it will show up in the list at the top of ths container.
+            //}
             if(ModelState.IsValid) // If the validation from the model is correct, then persist to db.
             {
                 _db.Categories.Add(obj); //<-- Pointing to the obj to be saved to the db
