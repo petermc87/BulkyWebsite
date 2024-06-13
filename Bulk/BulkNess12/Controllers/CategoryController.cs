@@ -33,7 +33,7 @@ namespace BulkNess12.Controllers
         {
             if(obj.DisplayOrder.ToString() == obj.Name)
             {
-
+                // --- CUSTOM VALIDATION (SERVER SIDE) ---//
                 ModelState.AddModelError("name", "The Category Name cannot exactly match the Display Order"); //<-- Adding an error message to the "name" HTML element in the front end when there is a match.
             }
             // --- NOTE:this is not required for the production app -- //
