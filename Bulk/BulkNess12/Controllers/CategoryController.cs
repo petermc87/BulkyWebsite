@@ -16,6 +16,8 @@ namespace BulkNess12.Controllers
         {
             _db = db;
         }
+
+        //--- READ ---//
         public IActionResult Index()
         {
             // Retrieve all the categories as a list and store it in objCategoryList
@@ -24,6 +26,7 @@ namespace BulkNess12.Controllers
             return View(objCategoryList);
         }
 
+        //--- CREATE ---//
         public IActionResult Create()
         {
             return View();
@@ -48,6 +51,23 @@ namespace BulkNess12.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        //--- UPDATE ---//
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            //Finding the cat by id
+            Category foundCategory = _db.Categories.Find(id);
+            if (foundCategory == null) //<-- Error message if not found
+            {
+                return NotFound();
+            }
+            // Returning the cat if it was found to the view.
+            return View(foundCategory);
         }
     }
 }
