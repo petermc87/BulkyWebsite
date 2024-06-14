@@ -54,6 +54,8 @@ namespace BulkNess12.Controllers
         }
 
         //--- UPDATE ---//
+
+        // -- Retrieve the cat.
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -68,7 +70,7 @@ namespace BulkNess12.Controllers
             //Category? foundCategory1 = _db.Categories.FirstOrDefault(u => u.Id == id);
             //// Isolating the id property and matching it with the id
             //Category? foundCategory2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
-            /// --------------------------- ///
+            /// ------------------------------------------------------------------------------------- ///
             
             if (foundCategory == null) //<-- Error message if not found
             {
@@ -77,5 +79,19 @@ namespace BulkNess12.Controllers
             // Returning the cat if it was found to the view.
             return View(foundCategory);
         }
+
+        // --> Update Cat in Db.
+        [HttpPost]
+        public IActionResult Edit(Category Obj)
+        {
+            if (ModelState.IsValid) // <-- Client side validate
+            {
+                _db.Categories.Add(Obj); // <-- Add the cat obj.
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
     }
 }

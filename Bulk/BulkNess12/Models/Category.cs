@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BulkNess12.Models
 {
@@ -7,6 +8,7 @@ namespace BulkNess12.Models
     {
         // Columns in the table.
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         [MaxLength(30)] // <-- validation state that checks if its less than or equal to 30 chars.
