@@ -61,7 +61,15 @@ namespace BulkNess12.Controllers
                 return NotFound();
             }
             //Finding the cat by id
-            Category foundCategory = _db.Categories.Find(id);
+            Category? foundCategory = _db.Categories.Find(id);
+
+            /// --- TESTING OTHER OPTIONS -- ///
+            //// Isolating the id property of the Category object and matching it with the id passed in.
+            //Category? foundCategory1 = _db.Categories.FirstOrDefault(u => u.Id == id);
+            //// Isolating the id property and matching it with the id
+            //Category? foundCategory2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+            /// --------------------------- ///
+            
             if (foundCategory == null) //<-- Error message if not found
             {
                 return NotFound();
