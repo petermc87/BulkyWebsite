@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkNess12.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618021259_AddCategoryToDb")]
-    partial class AddCategoryToDb
+    [Migration("20240618144930_AddCategoryTableToDb")]
+    partial class AddCategoryTableToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
