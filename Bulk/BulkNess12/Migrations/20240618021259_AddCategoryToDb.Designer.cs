@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkNess12.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240530144825_AddCategorytableToDb")]
-    partial class AddCategorytableToDb
+    [Migration("20240618021259_AddCategoryToDb")]
+    partial class AddCategoryToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,8 @@ namespace BulkNess12.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
