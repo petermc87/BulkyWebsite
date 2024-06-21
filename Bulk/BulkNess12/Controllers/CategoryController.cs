@@ -86,7 +86,7 @@ namespace BulkNess12.Controllers
         {
             if (ModelState.IsValid) // <-- Client side validate
             {
-                _db.Categories.Add(Obj); // <-- Add the cat obj.
+                _db.Categories.Update(Obj); // <-- Add the cat obj.
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
