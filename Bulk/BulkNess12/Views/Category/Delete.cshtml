@@ -1,10 +1,10 @@
 ﻿@model Category
 
 <form method="post">
-    <input asp-for="Id" hidden />
+    <input asp-for="Id" hidden /> @* This is to the differentiate between different objects (eg categories and line items)*@
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Edit Category</h2>
+            <h2 class="text-primary">Delete Category</h2>
             <hr />
         </div>
         @* If you change it to ModelOnly, it will only show Model and not property related errors.
@@ -18,17 +18,16 @@
             NOTE: Label doesnt need
             *@
             <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control">
-            <span asp-validation-for="Name" class="text-danger"></span> @* Tag Validations for Errors! NOTE: go to model for custom error message. *@
+            <input asp-for="Name" disabled class="form-control">
+
         </div>
         <div class="mb-3 row p-1">
             <label asp-for="DisplayOrder"></label>
-            <input asp-for="DisplayOrder" class="form-control" />
-            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            <input asp-for="DisplayOrder" disabled class="form-control" />
         </div>
         <div class="row">
             <div class="col-6 col-md-3">
-                <button type="submit" class="btn btn-primary form-control">Update</button>
+                <button type="submit" class="btn btn-danger form-control">Delete</button>
             </div>
             @* This will take a standard bootstrap width of 6 columns on regular, *@
             @* but 3 columns on a medium to small size screen. This makes it a *@

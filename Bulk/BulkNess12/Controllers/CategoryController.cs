@@ -1,7 +1,9 @@
 ﻿using BulkNess12.Data;
 using BulkNess12.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace BulkNess12.Controllers
@@ -92,6 +94,41 @@ namespace BulkNess12.Controllers
             }
             return View();
         }
+        // Get Cat to be deleted, and pass to view
+        public IActionResult Delete(int? id)
+        {
+            // Error case
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            // retrieving the category object
+            Category? returnedCategory = _db.Categories.Find(id);
 
+            // Error case
+            if (returnedCategory == null)
+            {
+                return NotFound();
+            }
+            // Pass the object into the view if found
+            return View(returnedCategory);
+        }
+        // Post a deletion request to remove from db.
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            // Finding cat obj to be deleted
+            Category? obj = _db.Categories.Find(id);
+
+            // Error Case 
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            // Remove for db
+            _db.Categories.Remove(obj);
+            _db.SaveChanges(); //<-- Save db changed after deletion
+            return RedirectToAction("Index"); // Return to the index screen.
+        }
     }
 }
