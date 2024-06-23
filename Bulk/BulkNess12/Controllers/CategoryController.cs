@@ -50,6 +50,7 @@ namespace BulkNess12.Controllers
             {
                 _db.Categories.Add(obj); //<-- Pointing to the obj to be saved to the db
                 _db.SaveChanges();//<-- Saving to db.
+                TempData["success"] = "New Category Created"; // <-- This data is displayed in the Index.cshtml if it exists. The "success" is the key identifier for the data.
                 return RedirectToAction("Index");
             }
             return View();
@@ -90,6 +91,7 @@ namespace BulkNess12.Controllers
             {
                 _db.Categories.Update(Obj); // <-- Add the cat obj.
                 _db.SaveChanges();
+                TempData["success"] = "Category Updated";
                 return RedirectToAction("Index");
             }
             return View();
@@ -128,6 +130,7 @@ namespace BulkNess12.Controllers
             // Remove for db
             _db.Categories.Remove(obj);
             _db.SaveChanges(); //<-- Save db changed after deletion
+            TempData["success"] = "Category successfully deleted";
             return RedirectToAction("Index"); // Return to the index screen.
         }
     }
