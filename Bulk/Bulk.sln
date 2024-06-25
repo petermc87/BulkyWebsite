@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34902.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkNess12", "BulkNess12\BulkNess12.csproj", "{E2D90068-3C1C-4778-9368-09F4951D7287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkNess12", "BulkNess12\BulkNess12.csproj", "{E2D90068-3C1C-4778-9368-09F4951D7287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulktWebrazor_temp", "BulktWebrazor_temp\BulktWebrazor_temp.csproj", "{3850CB1D-CF1C-47D2-92ED-726EBFFE1D11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E2D90068-3C1C-4778-9368-09F4951D7287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2D90068-3C1C-4778-9368-09F4951D7287}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2D90068-3C1C-4778-9368-09F4951D7287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3850CB1D-CF1C-47D2-92ED-726EBFFE1D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3850CB1D-CF1C-47D2-92ED-726EBFFE1D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3850CB1D-CF1C-47D2-92ED-726EBFFE1D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3850CB1D-CF1C-47D2-92ED-726EBFFE1D11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
