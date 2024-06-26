@@ -1,4 +1,62 @@
 ﻿@page
 @model BulktWebrazor_temp.Pages.Categories.IndexModel
 
-<h1>Category List</h1>
+
+@* <partial name="_Notification"/> *@
+@* Wrapper container *@
+<div class="container">
+
+
+    @* Creating row with padding on top *@
+    <div class="row pt-4 pb-3" >
+        @* This container represents the first 6 rows *@
+        <div class="col-6">
+            @* Use the primary text from the standard stylesheet and have *@
+            @* the text align to the end. *@
+            <h2 class="text-primary">Category List</h2>
+        </div>
+        @* This container represents the last 6 rows *@
+        <div class="col-6 text-end">
+            @* Create category button. Complete route is needed in razor pages *@
+            <a asp-page="Categories/Create" class="btn btn-primary">
+                @* NOTE: In Razor pages, we define the route/ relative path to the Create page in the asp-page part of the element above.*@
+                <i class="bi bi-plus-circle"></i> Create Category
+            </a>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+               <th>
+                   Category Name
+               </th>
+               <th>
+                   Display Order
+               </th>
+           </tr>
+        </thead>
+        <tbody>
+            @* This is how you retrieve the list and loop in C# *@
+            @foreach(var obj in Model.CategoryList.OrderBy(u => u.DisplayOrder)) // CategoryList is accessed from the model as defined in the index.cshtml.cs
+            {
+                <tr>
+                    <td>
+                        @obj.Name
+                    </td>
+                    <td>
+                        @obj.DisplayOrder
+                    </td>
+                    <td>
+                        @* NOTE: The asp-route-id passes the id of this category to the edit controller. *@
+                        <a asp-page="Categories/edit"  asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>Edit
+                        </a>
+                        <a asp-page="Categories/delete"  asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                            <i class="bi bi-trash-fill"></i>Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
