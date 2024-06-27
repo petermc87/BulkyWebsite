@@ -1,0 +1,53 @@
+﻿@page
+@model BulktWebrazor_temp.Pages.Categories.CreateModel
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Create Category</h2>
+            <hr />
+        </div>
+        @* If you change it to ModelOnly, it will only show Model and not property related errors.
+        If you change it to None, it wont show anything in the summary *@
+        @* <div asp-validation-summary="All"></div> *@ @* <--- NOTE: This is not required because we already have individual validations set elsewhere *@
+        @* Make all these "row" bootstrap classes to align with the bottom containers below. *@
+        <div class="mb-3 row p-1">
+            @* The asp-for links the "name" property from the Category model.
+            NOTE: You dont need input "type" declaration in the input field
+            because it picks it up directly from the model.
+            NOTE: Label doesnt need
+            *@
+            <label asp-for="NewCategory.Name"></label>
+            <input asp-for="NewCategory.Name" class="form-control">
+            <span asp-validation-for="NewCategory.Name" class="text-danger"></span> @* Tag Validations for Errors! NOTE: go to model for custom error message. *@
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="NewCategory.DisplayOrder"></label>
+            <input asp-for="NewCategory.DisplayOrder" class="form-control" />
+            <span asp-validation-for="NewCategory.DisplayOrder" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">Create</button>
+            </div>
+            @* This will take a standard bootstrap width of 6 columns on regular, *@
+            @* but 3 columns on a medium to small size screen. This makes it a *@
+            @* responsive design. *@
+            <div class="col-6 col-md-3">
+                @* This button invokes the index controller for the table of categories. *@
+                <a asp-page="/categories/index" class="btn btn-outline-secondary border form-control">
+                    Back to list
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@* CLIENT SIDE VALIATION -> This will mean that any error message that is NOT custom
+will be shown in the front end. *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
