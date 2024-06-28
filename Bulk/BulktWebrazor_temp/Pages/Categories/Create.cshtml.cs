@@ -23,6 +23,7 @@ namespace BulktWebrazor_temp.Pages.Categories
         {
             _db.Categories.Add(NewCategory);
             _db.SaveChanges();
+            TempData["success"] = "Category Created Successfully";
             return RedirectToPage("Index");
         }
     }

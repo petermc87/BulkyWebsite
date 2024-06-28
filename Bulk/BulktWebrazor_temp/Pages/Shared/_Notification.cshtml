@@ -1,0 +1,24 @@
+﻿@if (TempData["success"] != null)
+{
+    //JQuery Library added
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    //CDN link on Toastr
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        toastr.success('@TempData["success"]');
+    </script>
+
+
+}
+@if (TempData["error"] != null)
+{
+    //JQuery Library added
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    //CDN link on Toastr
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        toastr.error('@TempData["error"]');
+    </script>
+
+
+}
