@@ -1,5 +1,5 @@
-﻿using BulkNess12.Data;
-using BulkNess12.Models;
+﻿using BulkyWeb.DataAccess.Data;
+using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

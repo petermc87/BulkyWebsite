@@ -38,4 +38,10 @@
     <UpToDateCheckInput Remove="Views\Shared\_Notification.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BulkyWeb\Bulky.Models\Bulky.Models.csproj" />
+    <ProjectReference Include="..\..\..\BulkyWeb\Bulky.Utility\Bulky.Utility.csproj" />
+    <ProjectReference Include="..\..\..\BulkyWeb\BulkyWeb.DataAccess\BulkyWeb.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
