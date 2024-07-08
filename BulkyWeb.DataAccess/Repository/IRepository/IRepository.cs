@@ -16,6 +16,8 @@ namespace BulkyWeb.DataAccess.Repository.IRepository
         // A representation of the link operation shown in the MVC controller: Category? foundCategory1 = _db.Categories.FirstOrDefault(u => u.Id == id);
         T Get(Expression<Func<T, bool>> filter);
         void Add(T entity);
+
+        void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity); // <-- Removes all objects
         
 
