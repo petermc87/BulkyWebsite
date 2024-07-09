@@ -9,7 +9,7 @@ namespace BulkyWeb.DataAccess.Repository.IRepository
 {
     // Generic Repository Pattern
     // NOTE: Update is that used in Generic because of how nuanced it is.
-    internal interface IRepository<T> where T : class 
+    public interface IRepository<T> where T : class 
     {
         // T - Category
         IEnumerable<T> GetAll();

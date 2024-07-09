@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BulkyWeb.DataAccess.Repository
 {
     // T is the Generic class
-    internal class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         // Private readonly field to store the application's database context.
         private readonly ApplicationDbContext _db;
