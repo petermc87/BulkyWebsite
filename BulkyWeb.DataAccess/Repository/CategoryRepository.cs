@@ -24,12 +24,12 @@ namespace BulkyWeb.DataAccess.Repository
             _db = db;
         }
   
-        void ICategoryRepository.Save()
+        public void Save()
         {
             _db.SaveChanges();
         }
 
-        void ICategoryRepository.Update(Category obj)
+        public void Update(Category obj)
         {
             _db.Categories.Add(obj);
         }
