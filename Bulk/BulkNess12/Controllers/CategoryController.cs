@@ -5,25 +5,26 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using BulkyWeb.DataAccess.Repository.IRepository;
 
 namespace BulkNess12.Controllers
 {
     public class CategoryController : Controller
     {
 
-        private readonly ApplicationDbContext _db;
+        private readonly ICategoryRepository _categoryRepo;
         // Implementation of db context
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(ICategoryRepository db)
         // Assign the db context to the local variable
         {
-            _db = db;
+            _categoryRepo = db;
         }
 
         //--- READ ---//
         public IActionResult Index()
         {
             // Retrieve all the categories as a list and store it in objCategoryList
-            List<Category> objCategoryList = _db.Categories.ToList(); // <-- this is typed
+            List<Category> objCategoryList = _categoryRepo.GetAll().ToList(); // <-- this is typed
             // Passing the list of categories into the View.
             return View(objCategoryList);
         }
@@ -48,8 +49,8 @@ namespace BulkNess12.Controllers
             //}
             if(ModelState.IsValid) // If the validation from the model is correct, then persist to db.
             {
-                _db.Categories.Add(obj); //<-- Pointing to the obj to be saved to the db
-                _db.SaveChanges();//<-- Saving to db.
+                _categoryRepo.Add(obj); //<-- Pointing to the obj to be saved to the db
+                _categoryRepo.Save();//<-- Saving to db.
                 TempData["success"] = "New Category Created"; // <-- This data is displayed in the Index.cshtml if it exists. The "success" is the key identifier for the data.
                 return RedirectToAction("Index");
             }
@@ -66,7 +67,7 @@ namespace BulkNess12.Controllers
                 return NotFound();
             }
             //Finding the cat by id
-            Category? foundCategory = _db.Categories.Find(id);
+            Category? foundCategory = _categoryRepo.Get(u => u.Id == id);
 
             /// --- TESTING OTHER OPTIONS -- ///
             //// Isolating the id property of the Category object and matching it with the id passed in.
@@ -89,8 +90,8 @@ namespace BulkNess12.Controllers
         {
             if (ModelState.IsValid) // <-- Client side validate
             {
-                _db.Categories.Update(Obj); // <-- Add the cat obj.
-                _db.SaveChanges();
+                _categoryRepo.Update(Obj); // <-- Add the cat obj.
+                _categoryRepo.Save();
                 TempData["success"] = "Category Updated";
                 return RedirectToAction("Index");
             }
@@ -105,7 +106,7 @@ namespace BulkNess12.Controllers
                 return NotFound();
             }
             // retrieving the category object
-            Category? returnedCategory = _db.Categories.Find(id);
+            Category? returnedCategory = _categoryRepo.Get(u => u.Id == id);
 
             // Error case
             if (returnedCategory == null)
@@ -120,7 +121,7 @@ namespace BulkNess12.Controllers
         public IActionResult DeletePOST(int? id)
         {
             // Finding cat obj to be deleted
-            Category? obj = _db.Categories.Find(id);
+            Category? obj = _categoryRepo.Get(u => u.Id == id);
 
             // Error Case 
             if(obj == null)
@@ -128,8 +129,8 @@ namespace BulkNess12.Controllers
                 return NotFound();
             }
             // Remove for db
-            _db.Categories.Remove(obj);
-            _db.SaveChanges(); //<-- Save db changed after deletion
+            _categoryRepo.Remove(obj);
+            _categoryRepo.Save(); //<-- Save db changed after deletion
             TempData["success"] = "Category successfully deleted";
             return RedirectToAction("Index"); // Return to the index screen.
         }
