@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulkyWeb.DataAccess.Repository
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
         // List out all interface/classes here
         ICategoryRepository Category { get; }
