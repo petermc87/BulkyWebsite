@@ -8,7 +8,7 @@ using System.Linq;
 using BulkyWeb.DataAccess.Repository.IRepository;
 using BulkyWeb.DataAccess.Repository;
 
-namespace BulkNess12.Controllers
+namespace BulkNess12.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -38,7 +38,7 @@ namespace BulkNess12.Controllers
         [HttpPost] // <-- Http request for form posted in the Create.cshtml
         public IActionResult Create(Category obj)
         {
-            if(obj.DisplayOrder.ToString() == obj.Name)
+            if (obj.DisplayOrder.ToString() == obj.Name)
             {
                 // --- CUSTOM VALIDATION (SERVER SIDE) ---//
                 ModelState.AddModelError("name", "The Category Name cannot exactly match the Display Order"); //<-- Adding an error message to the "name" HTML element in the front end when there is a match.
@@ -48,7 +48,7 @@ namespace BulkNess12.Controllers
             //{
             //    ModelState.AddModelError("", "Test is not a valid name"); //<-- We are not binding this to a HTML element, so it will show up in the list at the top of ths container.
             //}
-            if(ModelState.IsValid) // If the validation from the model is correct, then persist to db.
+            if (ModelState.IsValid) // If the validation from the model is correct, then persist to db.
             {
                 _unitOfWork.Category.Add(obj); //<-- Pointing to the obj to be saved to the db
                 _unitOfWork.Save();//<-- Saving to db.
@@ -76,7 +76,7 @@ namespace BulkNess12.Controllers
             //// Isolating the id property and matching it with the id
             //Category? foundCategory2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
             /// ------------------------------------------------------------------------------------- ///
-            
+
             if (foundCategory == null) //<-- Error message if not found
             {
                 return NotFound();
@@ -102,7 +102,7 @@ namespace BulkNess12.Controllers
         public IActionResult Delete(int? id)
         {
             // Error case
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -125,7 +125,7 @@ namespace BulkNess12.Controllers
             Category? obj = _unitOfWork.Category.Get(u => u.Id == id);
 
             // Error Case 
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }

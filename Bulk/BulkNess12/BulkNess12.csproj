@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Category\Test.cshtml" />
+    <Content Remove="Areas\Admin\Views\Category\Test.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,21 +17,21 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Category\Create.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Category\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Category\Create.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Category\Test.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Test.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_Notification.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Category\Test.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Category\Test.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +42,10 @@
     <ProjectReference Include="..\..\..\BulkyWeb\Bulky.Models\Bulky.Models.csproj" />
     <ProjectReference Include="..\..\..\BulkyWeb\Bulky.Utility\Bulky.Utility.csproj" />
     <ProjectReference Include="..\..\..\BulkyWeb\BulkyWeb.DataAccess\BulkyWeb.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

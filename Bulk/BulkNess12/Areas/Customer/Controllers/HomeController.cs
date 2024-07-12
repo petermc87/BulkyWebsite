@@ -2,7 +2,7 @@ using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BulkNess12.Controllers
+namespace BulkNess12.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {
