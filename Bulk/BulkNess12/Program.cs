@@ -13,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => //<-- Registering
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // <-- Pass in the connection string "Key" from appsettings.json
 
 // Repository service
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
