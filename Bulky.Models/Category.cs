@@ -6,16 +6,36 @@ namespace Bulky.Models
 {
     public class Category
     {
-        // Columns in the table.
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        [MaxLength(30)] // <-- validation state that checks if its less than or equal to 30 chars.
-        [DisplayName("Category Name")] //<-- This is the text that is passed into the input on the front end.
-        public string Name { get; set; }
-        [DisplayName("Display Order")]
-        [Range(1, 100, ErrorMessage = "Display Order must be between 1 and 100")]
-        public int DisplayOrder { get; set; }
+        public string Title { get; set; }
+        [Required]
+        public string ISBN { get; set; }
+
+        [Required]
+        public string Author { get; set; }
+        public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "List Price")]
+        [Range(1, 1000)]
+        public double ListPrice { get; set; }
+
+        [Required]
+        [Display(Name = "Price for 1-50")]
+        [Range(1,1000)]
+        public double Price { get; set; }
+
+        [Required]
+        [Display(Name = "Price for 50+")]
+        [Range(1,1000)]
+        public double Price50 { get; set; }
+
+        [Required]
+        [Display(Name = "Price for 100+")]
+        [Range(1, 1000)]
+        public double Price100 { get; set; }
+
     }
 }
