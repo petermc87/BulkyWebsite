@@ -11,6 +11,9 @@ namespace BulkyWeb.DataAccess.Repository
     {
         // List out all interface/classes here
         ICategoryRepository Category { get; }
+
+        IProductRepository Product { get; }
         void Save();
+
     }
 }

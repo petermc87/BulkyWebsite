@@ -25,11 +25,6 @@ namespace BulkyWeb.DataAccess.Data
                 new Category { Id = 3, Name = "Horror", DisplayOrder = 3 }
                 );
 
-            //// Additional context
-            //modelBuilder.Entity<Category>(entity =>
-            //{
-            //    entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            //});
 
             // Seed data for Product
             modelBuilder.Entity<Product>().HasData(
