@@ -1,0 +1,20 @@
+﻿@model List<Product>
+<partial name="_Notification"/>
+@* Wrapper container *@
+
+<div class="card shadow border-0 mt-4">
+    @foreach (var obj in Model.OrderBy(u => u.Title))
+    {
+        <tr>
+            <td>
+                @obj.Author
+            </td>
+            <td>
+                @obj.Price
+            </td>
+            <td>
+                @obj.ListPrice
+            </td>
+        </tr>
+    }
+</div>
