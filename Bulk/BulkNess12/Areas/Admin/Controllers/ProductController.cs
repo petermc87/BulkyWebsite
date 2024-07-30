@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
-    public class ProductController : Product
+    public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
