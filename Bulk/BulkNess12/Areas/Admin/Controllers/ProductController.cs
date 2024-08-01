@@ -27,27 +27,28 @@ namespace BulkNess12.Areas.Admin.Controllers
 
         //TODO:
 
-//        //--- CREATE ---//
-//        public IActionResult Create()
-//        {
-//            return View();
-//        }
+        //--- CREATE ---//
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-//        [HttpPost]
+        [HttpPost]
 
-//        public IActionResult Create(Product obj)
-//        {
-//            // Checking the model state is valid
-//            if (ModelState.IsValid)
-//            {
-//                _unitOfWork.Product.Add(obj);
-//                _unitOfWork.Save();
-//                TempData["success"] = "New Product has been created";
-//                return RedirectToAction("Index");
-//            }
+        public IActionResult Create(Product obj)
+        {
+            // Maybe create a custom validation here?
+            // Checking the model state is valid
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "New Product has been created";
+                return RedirectToAction("Index");
+            }
 
-//            return View();
-//}
+            return View();
+        }
     }
 }
 
