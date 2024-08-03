@@ -10,6 +10,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card-body p-4">
             <div class="row pt-4 pb-3">
                 <div class="col-6"></div>
@@ -19,26 +20,53 @@
                     </a>
                 </div>
             </div>
-        </div>
+   
+            <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        ISBN
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        List price
+                    </th>
+                </tr>
+            </thead>
 
-        @foreach (var obj in Model.OrderBy(u => u.Title))
-        {
-            <tr>
-                <td>
-                    @obj.Title
-                </td>
-                <td>
-                    @obj.ISBN
-                </td>
-                <td>
-                    @obj.Author
-                </td>
-                <td>
-                    @obj.Price
-                </td>
-                <td>
-                    @obj.ListPrice
-                </td>
-            </tr>
-        }
-    </div>
+                <tbody>
+            @foreach (var obj in Model.OrderBy(u => u.Title))
+            {
+           
+
+           
+                    <tr>
+                        <td>
+                            @obj.Title
+                        </td>
+                        <td>
+                            @obj.ISBN
+                        </td>
+                        <td>
+                            @obj.Author
+                        </td>
+                        <td>
+                            @obj.Price
+                        </td>
+                        <td>
+                            @obj.ListPrice
+                        </td>
+                    </tr>
+
+            }
+                </tbody>
+            </table>
+        </div>
