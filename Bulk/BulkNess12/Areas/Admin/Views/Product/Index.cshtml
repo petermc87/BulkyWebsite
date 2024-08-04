@@ -64,6 +64,12 @@
                         <td>
                             @obj.ListPrice
                         </td>
+
+                        <td>
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square">Edit</i>
+                            </a>
+                        </td>
                     </tr>
 
             }

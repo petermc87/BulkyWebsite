@@ -49,6 +49,41 @@ namespace BulkNess12.Areas.Admin.Controllers
 
             return View();
         }
+
+        //--- UPDATE ---//
+        public IActionResult Edit(int? id)
+        {
+            if(id == 0 || id == null)
+            {
+                return NotFound();
+            }
+
+            // Finding the product by the id.
+            Product? foundProduct = _unitOfWork.Product.Get(u => u.Id == id);
+
+            if(foundProduct != null)
+            {
+                return NotFound();
+            }
+
+            //Passing the object to the view if found
+            return View(foundProduct);
+        }
+
+        // Updating the db
+
+        [HttpPost]
+        public IActionResult Edit(Product Obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Product.Update(Obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product Updated";
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
 
