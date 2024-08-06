@@ -42,7 +42,7 @@
                 </tr>
             </thead>
 
-                <tbody>
+            <tbody>
             @foreach (var obj in Model.OrderBy(u => u.Title))
             {
            
@@ -67,7 +67,7 @@
 
                         <td>
                             <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                <i class="bi bi-pencil-square">Edit</i>
+                                <i class="bi bi-pencil-square"></i>Edit
                             </a>
                         </td>
                     </tr>

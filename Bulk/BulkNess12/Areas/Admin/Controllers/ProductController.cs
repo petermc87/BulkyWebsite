@@ -61,7 +61,7 @@ namespace BulkNess12.Areas.Admin.Controllers
             // Finding the product by the id.
             Product? foundProduct = _unitOfWork.Product.Get(u => u.Id == id);
 
-            if(foundProduct != null)
+            if(foundProduct == null)
             {
                 return NotFound();
             }
