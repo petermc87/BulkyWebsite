@@ -84,6 +84,38 @@ namespace BulkNess12.Areas.Admin.Controllers
             }
             return View();
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if(id == 0 || id == null)
+            {
+                return NotFound();
+            }
+
+            Product? returnedProduct = _unitOfWork.Product.Get(u => u.Id == id);
+
+            if (returnedProduct == null)
+            {
+                return NotFound();
+            }
+            return View(returnedProduct); 
+        }
+        [HttpPost, ActionName("Delete")]
+
+        public IActionResult DeletePOST(int? id)
+        {
+            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
+
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.Product.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Successfully deleted product";
+            return RedirectToAction("index");
+        }
     }
 }
 
