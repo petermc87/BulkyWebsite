@@ -20,22 +20,24 @@ namespace BulkNess12.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+
+            return View(objProductList);
+
+        }
+
+        //--- CREATE ---//
+        public IActionResult Create()
+        {
             // Picking the Name and Id columns of the Category and adding it the product list for data view
             IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.Id.ToString()
             });
-            //TODO: Add view here
-            return View(objProductList);
 
-        }
+            // Viewbag is used for passing data from Controller to View
+            ViewBag.CategoryList = CategoryList;
 
-        //TODO:
-
-        //--- CREATE ---//
-        public IActionResult Create()
-        {
             return View();
         }
 
