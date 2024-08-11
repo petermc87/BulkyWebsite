@@ -31,13 +31,13 @@
                         ISBN
                     </th>
                     <th>
+                        List price
+                    </th>
+                    <th>
                         Author
                     </th>
                     <th>
-                        Price
-                    </th>
-                    <th>
-                        List price
+                        Category
                     </th>
                 </tr>
             </thead>
@@ -56,14 +56,16 @@
                             @obj.ISBN
                         </td>
                         <td>
-                            @obj.Author
-                        </td>
-                        <td>
-                            @obj.Price
-                        </td>
-                        <td>
                             @obj.ListPrice
                         </td>
+                        <td>
+                            @obj.Author
+                        </td>
+@*   ADD CATEGORY DETAILS IN THE FUTURE
+                        <td>
+                            @obj.Category
+                        </td> *@
+
 
                         <td>
                             <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
