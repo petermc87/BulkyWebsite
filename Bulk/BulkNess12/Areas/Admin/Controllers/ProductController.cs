@@ -1,6 +1,7 @@
 ﻿using Bulky.Models;
 using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
@@ -19,7 +20,12 @@ namespace BulkNess12.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
-
+            // Picking the Name and Id columns of the Category and adding it the product list for data view
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
             //TODO: Add view here
             return View(objProductList);
 
