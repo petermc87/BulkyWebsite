@@ -2,6 +2,7 @@
 using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Bulky.Models.ViewModels;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
@@ -26,8 +27,33 @@ namespace BulkNess12.Areas.Admin.Controllers
         }
 
         //--- CREATE ---//
-        public IActionResult Create()
+        public IActionResult Create() 
         {
+            ProductVM productVM = new()
+            {
+                //  Generating a new list item to be added to the CategoryList
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
+        }
+        [HttpPost]
+
+        public IActionResult Create(ProductVM obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Product.Add(obj.Product);
+                _unitOfWork.Save();
+                TempData["success"] = "Product created successfully";
+                return RedirectToAction("Index");
+            }
+
+
             // Picking the Name and Id columns of the Category and adding it the product list for data view
             IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
             {
@@ -41,22 +67,6 @@ namespace BulkNess12.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
-
-        public IActionResult Create(Product obj)
-        {
-            // Maybe create a custom validation here?
-            // Checking the model state is valid
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Product.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "New Product has been created";
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
 
         //--- UPDATE ---//
         public IActionResult Edit(int? id)
