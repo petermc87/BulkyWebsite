@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Bulky.Models.ViewModels
 {
-    internal class ProductVM
+    public class ProductVM
     {
-        public int Product { get; set; }
+        public Product Product { get; set; }
         // Dropdown
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
