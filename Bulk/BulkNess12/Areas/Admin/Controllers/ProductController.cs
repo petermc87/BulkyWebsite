@@ -43,28 +43,25 @@ namespace BulkNess12.Areas.Admin.Controllers
         }
         [HttpPost]
 
-        public IActionResult Create(ProductVM obj)
+        public IActionResult Create(ProductVM productVM)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj.Product);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-
-
-            // Picking the Name and Id columns of the Category and adding it the product list for data view
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            else
             {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
-
-            // Viewbag is used for passing data from Controller to View
-            ViewBag.CategoryList = CategoryList;
-
-            return View();
+                // Populate cat list dropdown (genre) in order to avoid the exception error.
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(productVM);
+            }
         }
 
 
