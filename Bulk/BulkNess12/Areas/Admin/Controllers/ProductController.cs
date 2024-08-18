@@ -26,8 +26,8 @@ namespace BulkNess12.Areas.Admin.Controllers
 
         }
 
-        //--- CREATE ---//
-        public IActionResult Create() 
+        //--- UPSERT ---//
+        public IActionResult Upsert(int? id) 
         {
             ProductVM productVM = new()
             {
@@ -39,11 +39,22 @@ namespace BulkNess12.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                // Create product
+                return View(productVM);
+            }
+            else
+            {
+                // Update product.
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+         
         }
         [HttpPost]
-
-        public IActionResult Create(ProductVM productVM)
+        // Add in the form file, which is related to the image being uploaded in the form.
+        public IActionResult Create(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
