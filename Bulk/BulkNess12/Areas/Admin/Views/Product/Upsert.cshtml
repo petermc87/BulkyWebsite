@@ -9,10 +9,11 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post" class="row" enctype="multipart/form-data">
+        <form asp-action=@(Model.Product.Id != 0 ? "Edit" : "Create") method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="Product.Id" hidden />
             <div class="border-p3">
                 <div class="form-floating py-2 col-12">
-                    @* ADD IN INPUTS IN RELATION TO THE MODEL. *@
+                   
                     <input asp-for="Product.Title" class="form-control border-0 shadow">
                     <label asp-for="Product.Title" class="ms-2"></label>
                     <span asp-validation-for="Product.Title" class="text-danger"></span>
@@ -28,8 +29,9 @@
                     <span asp-validation-for="Product.Author" class="text-danger"></span>
                 </div>
                 <div class="py-2 col-12">
-                    <label asp-for="Product.Description" class="ms-2"></label>
-                    <textarea asp-for="Product.Description" class="form-control border-0 shadow"></textarea>                </div>
+                    <label asp-for="Product.Description" class="ms-2 text-muted"></label>
+                    <textarea asp-for="Product.Description" class="form-control border-0 shadow"></textarea>
+                </div>
                 <div class="form-floating py-2 col-12">
                     <input asp-for="Product.ListPrice" class="form-control border-0 shadow">
                     <label asp-for="Product.ListPrice" class="ms-2"></label>
@@ -58,11 +60,13 @@
                     <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input type="file" class="form-control border-0 shadow" >
+                    <input asp-for="Product.ImageUrl" class="form-control border-0 shadow">
                     <label asp-for="Product.ImageUrl" class="ms-2"></label>
                     <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
-                </div>
-                <div class="row">
+@*                     <input type="file" class="form-control border-0 shadow" />
+                    <label asp-for="Product.ImageUrl" class="ms-2"></label> *@
+                </div> 
+                <div class="row pt-2">
                     <div class="col-6 col-md-3">
                         @if (Model.Product.Id != 0) 
                         {
@@ -85,7 +89,7 @@
     </div>
 </div>
 @section Scripts{
-    <script>
+  <script>
         tinymce.init({
             selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons lists media table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
