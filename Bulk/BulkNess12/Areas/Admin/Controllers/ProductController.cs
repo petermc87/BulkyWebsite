@@ -1,4 +1,7 @@
-﻿using Bulky.Models;
+﻿
+
+
+using Bulky.Models;
 using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -149,8 +152,6 @@ namespace BulkNess12.Areas.Admin.Controllers
 }
 
 
-
-
 //using Bulky.Models;
 //using BulkyWeb.DataAccess.Repository;
 //using Microsoft.AspNetCore.Mvc;
@@ -182,7 +183,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 
 
 //        //--- UPSERT ---//
-//        public IActionResult Upsert(int? id) 
+//        public IActionResult Upsert(int? id)
 //        {
 //            ProductVM productVM = new()
 //            {
@@ -213,25 +214,25 @@ namespace BulkNess12.Areas.Admin.Controllers
 //        {
 //            if (ModelState.IsValid)
 //            {
-//                // --> COMMENTED OUT TO CHECK THE PREVIOUS CODE FUNCTION <-- //
-//                // wwwroot folder path
-//                //string wwwRootPath = _webHostEnvironment.WebRootPath;
-//                //if(file != null)
-//                //{
-//                //    // Create a random file name in lieu of the current name + add preserve the file extension.
-//                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-//                //    // Combining the root path and the relative folder path
-//                //    string productPath = Path.Combine(wwwRootPath, @"images\product");
+//                //--> COMMENTED OUT TO CHECK THE PREVIOUS CODE FUNCTION < -- //
+//                //wwwroot folder path
+//                string wwwRootPath = _webHostEnvironment.WebRootPath;
+//                if (file != null)
+//                {
+//                    // Create a random file name in lieu of the current name + add preserve the file extension.
+//                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+//                    // Combining the root path and the relative folder path
+//                    string productPath = Path.Combine(wwwRootPath, @"images\product");
 
-//                //    // Save file to the path
-//                //    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-//                //    {
-//                //        file.CopyTo(fileStream);
-//                //    }
-//                //    // Image URL, in relation to the ProductVM (downstream Product model), is referenced to the 
-//                //    // stored image.
-//                //    productVM.Product.ImageUrl = @"\images\product\" + fileName;
-//                //}
+//                    // Save file to the path
+//                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+//                    {
+//                        file.CopyTo(fileStream);
+//                    }
+//                    // Image URL, in relation to the ProductVM (downstream Product model), is referenced to the 
+//                    // stored image.
+//                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+//                }
 //                _unitOfWork.Product.Add(productVM.Product);
 //                _unitOfWork.Save();
 //                TempData["success"] = "Product created successfully";
@@ -253,7 +254,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 //        //--- UPDATE ---//
 //        public IActionResult Edit(int? id)
 //        {
-//            if(id == 0 || id == null)
+//            if (id == 0 || id == null)
 //            {
 //                return NotFound();
 //            }
@@ -261,7 +262,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 //            // Finding the product by the id.
 //            Product? foundProduct = _unitOfWork.Product.Get(u => u.Id == id);
 
-//            if(foundProduct == null)
+//            if (foundProduct == null)
 //            {
 //                return NotFound();
 //            }
@@ -287,7 +288,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 
 //        public IActionResult Delete(int? id)
 //        {
-//            if(id == 0 || id == null)
+//            if (id == 0 || id == null)
 //            {
 //                return NotFound();
 //            }
@@ -298,7 +299,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 //            {
 //                return NotFound();
 //            }
-//            return View(returnedProduct); 
+//            return View(returnedProduct);
 //        }
 //        [HttpPost, ActionName("Delete")]
 
@@ -306,7 +307,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 //        {
 //            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
 
-//            if(obj == null)
+//            if (obj == null)
 //            {
 //                return NotFound();
 //            }
@@ -318,6 +319,3 @@ namespace BulkNess12.Areas.Admin.Controllers
 //        }
 //    }
 //}
-
-
-

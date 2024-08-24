@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form asp-action=@(Model.Product.Id != 0 ? "Edit" : "Create") method="post" class="row" enctype="multipart/form-data">
-            <input asp-for="Product.Id" hidden />
+        <form  method="post" class="row" enctype="multipart/form-data">
+            @* <input asp-for="Product.Id" hidden /> *@
             <div class="border-p3">
                 <div class="form-floating py-2 col-12">
                    
@@ -70,11 +70,11 @@
                     <div class="col-6 col-md-3">
                         @if (Model.Product.Id != 0) 
                         {
-                            <button type="submit" class="btn btn-primary form-control">Update</button>
+                            <button asp-action="Edit" type="submit" class="btn btn-primary form-control">Update</button>
                         }
                         else 
                         {
-                            <button type="submit" class="btn btn-primary form-control">Create</button>
+                            <button asp-action="Create" type="submit" class="btn btn-primary form-control">Create</button>
                         }
                     </div>
                     <div class="col-6 col-md-3">
