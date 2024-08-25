@@ -1,7 +1,4 @@
-﻿
-
-
-using Bulky.Models;
+﻿using Bulky.Models;
 using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,34 +9,33 @@ namespace BulkNess12.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        //public object ModelState { get; private set; }
-
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        // --> FOR ADDING IMAGE <-- //
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        //public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         //--- READ ---//
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
-
             return View(objProductList);
-
         }
+
+
+
 
         //--- UPSERT ---//
         public IActionResult Upsert(int? id)
         {
-            // Creating a new ProductVM instance.
             ProductVM productVM = new()
             {
-                //  Generating a new list item to be added to the CategoryList. This generates the list of
-                // categories in a dropdown for selection
+                //  Generating a new list item to be added to the CategoryList
                 CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
                 {
-                    // Populating the dropdown with this text
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
@@ -47,7 +43,7 @@ namespace BulkNess12.Areas.Admin.Controllers
             };
             if (id == null || id == 0)
             {
-                // Create product -> the "View" part is linked to the Upsert.cshtml for processing.
+                // Create product
                 return View(productVM);
             }
             else
@@ -64,6 +60,25 @@ namespace BulkNess12.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //--> COMMENTED OUT TO CHECK THE PREVIOUS CODE FUNCTION < -- //
+                //wwwroot folder path
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    // Create a random file name in lieu of the current name + add preserve the file extension.
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    // Combining the root path and the relative folder path
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    // Save file to the path
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    // Image URL, in relation to the ProductVM (downstream Product model), is referenced to the 
+                    // stored image.
+                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                }
                 _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
@@ -163,33 +178,34 @@ namespace BulkNess12.Areas.Admin.Controllers
 //    public class ProductController : Controller
 //    {
 //        private readonly IUnitOfWork _unitOfWork;
-//        private readonly IWebHostEnvironment _webHostEnvironment;
-//        // --> FOR ADDING IMAGE <-- //
-//        //public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+
+//        //public object ModelState { get; private set; }
+
 //        public ProductController(IUnitOfWork unitOfWork)
 //        {
 //            _unitOfWork = unitOfWork;
-//            //_webHostEnvironment = webHostEnvironment;
 //        }
 
 //        //--- READ ---//
 //        public IActionResult Index()
 //        {
 //            List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+
 //            return View(objProductList);
+
 //        }
-
-
-
 
 //        //--- UPSERT ---//
 //        public IActionResult Upsert(int? id)
 //        {
+//            // Creating a new ProductVM instance.
 //            ProductVM productVM = new()
 //            {
-//                //  Generating a new list item to be added to the CategoryList
+//                //  Generating a new list item to be added to the CategoryList. This generates the list of
+//                // categories in a dropdown for selection
 //                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
 //                {
+//                    // Populating the dropdown with this text
 //                    Text = u.Name,
 //                    Value = u.Id.ToString()
 //                }),
@@ -197,7 +213,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 //            };
 //            if (id == null || id == 0)
 //            {
-//                // Create product
+//                // Create product -> the "View" part is linked to the Upsert.cshtml for processing.
 //                return View(productVM);
 //            }
 //            else
@@ -214,25 +230,6 @@ namespace BulkNess12.Areas.Admin.Controllers
 //        {
 //            if (ModelState.IsValid)
 //            {
-//                //--> COMMENTED OUT TO CHECK THE PREVIOUS CODE FUNCTION < -- //
-//                //wwwroot folder path
-//                string wwwRootPath = _webHostEnvironment.WebRootPath;
-//                if (file != null)
-//                {
-//                    // Create a random file name in lieu of the current name + add preserve the file extension.
-//                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-//                    // Combining the root path and the relative folder path
-//                    string productPath = Path.Combine(wwwRootPath, @"images\product");
-
-//                    // Save file to the path
-//                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-//                    {
-//                        file.CopyTo(fileStream);
-//                    }
-//                    // Image URL, in relation to the ProductVM (downstream Product model), is referenced to the 
-//                    // stored image.
-//                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
-//                }
 //                _unitOfWork.Product.Add(productVM.Product);
 //                _unitOfWork.Save();
 //                TempData["success"] = "Product created successfully";
@@ -319,3 +316,6 @@ namespace BulkNess12.Areas.Admin.Controllers
 //        }
 //    }
 //}
+
+
+
