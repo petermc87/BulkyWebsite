@@ -70,6 +70,22 @@ namespace BulkNess12.Areas.Admin.Controllers
                     // Combining the root path and the relative folder path
                     string productPath = Path.Combine(wwwRootPath, @"images\product");
 
+                    // If there an image URL currently in there
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        // Need to trim off the backslash at the start of the URL)
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                        // Delete the old image
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+
+                    }
+
+
+
+
                     // Save file to the path
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
@@ -79,7 +95,18 @@ namespace BulkNess12.Areas.Admin.Controllers
                     // stored image.
                     productVM.Product.ImageUrl = @"\images\product\" + fileName;
                 }
-                _unitOfWork.Product.Add(productVM.Product);
+
+                // If its a new product, the id will be 0, so Add new
+                if (productVM.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
+                // Otherwise, update
+                else
+                {
+                    _unitOfWork.Product.Update(productVM.Product);
+                }
+
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
