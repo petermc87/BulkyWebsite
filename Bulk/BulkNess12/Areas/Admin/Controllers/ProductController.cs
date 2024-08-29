@@ -55,6 +55,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 
         }
         [HttpPost]
+        // --> CREATE & UPDATE <--//
         // Add in the form file, which is related to the image being uploaded in the form.
         public IActionResult Create(ProductVM productVM, IFormFile? file)
         {
@@ -108,7 +109,7 @@ namespace BulkNess12.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Save();
-                TempData["success"] = "Product created successfully";
+                TempData["success"] = "Product" + (@productVM.Product.Id == 0 ? "created" : "updated") + "successfully";
                 return RedirectToAction("Index");
             }
             else
@@ -121,42 +122,6 @@ namespace BulkNess12.Areas.Admin.Controllers
                 });
                 return View(productVM);
             }
-        }
-
-
-        //--- UPDATE ---//
-        public IActionResult Edit(int? id)
-        {
-            if (id == 0 || id == null)
-            {
-                return NotFound();
-            }
-
-            // Finding the product by the id.
-            Product? foundProduct = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (foundProduct == null)
-            {
-                return NotFound();
-            }
-
-            //Passing the object to the view if found
-            return View(foundProduct);
-        }
-
-        // Updating the db
-
-        [HttpPost]
-        public IActionResult Edit(Product Obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Product.Update(Obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Product Updated";
-                return RedirectToAction("Index");
-            }
-            return View();
         }
 
         public IActionResult Delete(int? id)
