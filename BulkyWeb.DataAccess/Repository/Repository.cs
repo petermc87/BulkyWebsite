@@ -27,6 +27,11 @@ namespace BulkyWeb.DataAccess.Repository
 
             // Assign the DbSet for the generic type T from the database context to the dbSet variable.
             this.dbSet = _db.Set<T>();
+
+            // Including the categoy value when fetching the products. You can use as many includes as you need.
+            _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
+
+
         }
 
         public void Add(T entity)
@@ -34,17 +39,41 @@ namespace BulkyWeb.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter); // <-- Filtering one record from the the dbset
+                                         // If there are includes, include them
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                // Splitting the string above that is passed in.
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        // -- Below is the comma separate string that gets passed in to the get all function.
+
+        //Category,CoverType
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
-            IQueryable<T> query = dbSet; 
+            IQueryable<T> query = dbSet;
+
+            // If there are includes, include them
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                // Splitting the string above that is passed in.
+                foreach(var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            
             return query.ToList(); // <-- Putting all the records into a list
+
         }
 
         public void Remove(T entity)
