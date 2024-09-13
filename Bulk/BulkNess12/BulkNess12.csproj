@@ -48,4 +48,11 @@
     <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\js\product.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
