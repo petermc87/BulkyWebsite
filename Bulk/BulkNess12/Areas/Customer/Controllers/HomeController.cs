@@ -1,21 +1,27 @@
 using Bulky.Models;
+using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BulkNess12.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        // Unit of work
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            return View(productList);
         }
 
         public IActionResult Privacy()
