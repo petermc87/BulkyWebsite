@@ -33,6 +33,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Separates the roles (customer and admin)
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
