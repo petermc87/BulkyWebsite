@@ -1,4 +1,5 @@
 ﻿using Bulky.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +8,7 @@ namespace BulkyWeb.DataAccess.Data
     // A class file that implements the DbContext Entity Framework package
     
     // Setting up project with Identity package in context.
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) // --> base(options) will pass the configuration to the DbContext class
         {
