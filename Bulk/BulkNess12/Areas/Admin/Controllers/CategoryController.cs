@@ -10,6 +10,7 @@ using BulkyWeb.DataAccess.Repository;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
 

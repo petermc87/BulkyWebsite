@@ -2,6 +2,7 @@ using BulkyWeb.DataAccess.Data;
 using BulkyWeb.DataAccess.Repository;
 using BulkyWeb.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddControllersWithViews();
 // Register the service from ApplicationDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options => //<-- Registering the class with Entity Framework.
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // <-- Pass in the connection string "Key" from appsettings.json
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Repository service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
