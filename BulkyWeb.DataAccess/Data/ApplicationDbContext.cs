@@ -1,10 +1,13 @@
 ﻿using Bulky.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulkyWeb.DataAccess.Data
 {
     // A class file that implements the DbContext Entity Framework package
-    public class ApplicationDbContext : DbContext
+    
+    // Setting up project with Identity package in context.
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) // --> base(options) will pass the configuration to the DbContext class
         {
@@ -18,6 +21,9 @@ namespace BulkyWeb.DataAccess.Data
         //Default entity framework builder for seeding
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            // For making the project work when there is no primary key yet.
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasData(
                 // Data that will be seeded to the database
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
