@@ -20,6 +20,7 @@ namespace BulkyWeb.DataAccess.Data
         public DbSet<Product> Products { get; set; }
 
         //Default entity framework builder for seeding
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
