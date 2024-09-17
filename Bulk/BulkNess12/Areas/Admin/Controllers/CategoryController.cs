@@ -1,16 +1,21 @@
-﻿using BulkyWeb.DataAccess.Data;
-using Bulky.Models;
+﻿using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BulkyWeb.DataAccess.Repository.IRepository;
 using BulkyWeb.DataAccess.Repository;
-
+// It was not picking up Authorize attribute from the package so I created
+// a custom variable. There is a conflict somewhere!!
+using AuthAttribute = Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Authorization;
+using Bulky.Utility;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 namespace BulkNess12.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AuthAttribute.Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
 
@@ -136,5 +141,9 @@ namespace BulkNess12.Areas.Admin.Controllers
             TempData["success"] = "Category successfully deleted";
             return RedirectToAction("Index"); // Return to the index screen.
         }
+    }
+
+    internal class AuthorizeAttribute : Attribute
+    {
     }
 }

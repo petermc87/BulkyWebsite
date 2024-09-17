@@ -3,10 +3,15 @@ using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Bulky.Models.ViewModels;
+// It was not picking up Authorize attribute from the package so I created
+// a custom variable. There is a conflict somewhere!!
+using AuthAttribute = Microsoft.AspNetCore.Authorization;
+using Bulky.Utility;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AuthAttribute.Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

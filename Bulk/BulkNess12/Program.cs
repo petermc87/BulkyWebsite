@@ -15,7 +15,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => //<-- Registering the class with Entity Framework.
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // <-- Pass in the connection string "Key" from appsettings.json
 
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+
+
 builder.Services.AddRazorPages();
 // Repository service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
