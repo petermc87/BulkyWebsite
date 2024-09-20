@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Company.cs">
+      <CustomToolNamespace>Bulky.Models</CustomToolNamespace>
+    </Compile>
+  </ItemGroup>
+
 </Project>

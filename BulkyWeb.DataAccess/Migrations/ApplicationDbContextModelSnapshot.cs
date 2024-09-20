@@ -63,6 +63,38 @@ namespace BulkyWeb.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Bulky.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("Bulky.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -426,51 +458,7 @@ namespace BulkyWeb.DataAccess.Migrations
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("AspNetUsers", t =>
-                        {
-                            t.Property("City")
-                                .HasColumnName("ApplicationUser_City");
-
-                            t.Property("Name")
-                                .HasColumnName("ApplicationUser_Name");
-
-                            t.Property("PostalCode")
-                                .HasColumnName("ApplicationUser_PostalCode");
-
-                            t.Property("State")
-                                .HasColumnName("ApplicationUser_State");
-
-                            t.Property("StreetAddress")
-                                .HasColumnName("ApplicationUser_StreetAddress");
-                        });
-
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Bulky.Models.Company", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("id")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Company");
                 });
 
             modelBuilder.Entity("Bulky.Models.Product", b =>
