@@ -16,7 +16,7 @@ namespace BulkyWeb.DataAccess.Data
         }
         // Command for creating Category table.
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Product> Products { get; set; }
 
         //Default entity framework builder for seeding
