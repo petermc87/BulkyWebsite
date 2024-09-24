@@ -11,7 +11,7 @@ using Bulky.Utility;
 namespace BulkNess12.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AuthAttribute.Authorize(Roles = SD.Role_Admin)]
+    //[AuthAttribute.Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
