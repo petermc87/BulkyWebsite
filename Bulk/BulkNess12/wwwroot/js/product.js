@@ -6,24 +6,24 @@ $(document).ready(function () {
 // Match the key name with whats in the json returned from the API.
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/admin/company/getall' },
+        "ajax": { url: '/admin/product/getall' },
         "columns": [
             // Make sure the 'key' property is exacrtly like it is in the API JSON.
-            { data: 'name', 'width': '15%' },
-            { data: 'streetaddress', 'width': '15%' },
-            { data: 'city', 'width': '15%' },
-            { data: 'state', 'width': '15%' },
-            { data: 'postalcode', 'width': '15%' },
-            { data: 'phonenumber', 'width': '15%' },
+            { data: 'title', 'width': '15%' },
+            { data: 'isbn', 'width': '15%' },
+            { data: 'listPrice', 'width': '15%' },
+            { data: 'author', 'width': '15%' },
+            // This is category.name because it is nested in product.
+            { data: 'category.name', 'width': '15%' },
             {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                                <a href="/admin/company/upsert?id=${data}" class="btn btn-primary mx-2"
+                                <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-2"
                                     <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>
-                                <a onClick=deleteCompany('/admin/company/delete/${data}') class="btn btn-danger mx-2"
+                                <a onClick=deleteProduct('/admin/product/delete/${data}') class="btn btn-danger mx-2"
                                     <i class="bi bi-trash-fill"></i>
                                    Delete
                                 </a>

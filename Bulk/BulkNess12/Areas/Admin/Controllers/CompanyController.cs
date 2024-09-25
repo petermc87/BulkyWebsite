@@ -15,7 +15,6 @@ namespace BulkNess12.Areas.Admin.Controllers
     public class CompanyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        // --> FOR ADDING IMAGE <-- //
         public CompanyController(IUnitOfWork unitOfWork)
 
         {
@@ -54,7 +53,7 @@ namespace BulkNess12.Areas.Admin.Controllers
         [HttpPost]
         // --> CREATE & UPDATE <--//
         // Add in the form file, which is related to the image being uploaded in the form.
-        public IActionResult Upsert(Company CompanyObj)
+        public IActionResult Create(Company CompanyObj)
         {
             if (ModelState.IsValid)
             {
