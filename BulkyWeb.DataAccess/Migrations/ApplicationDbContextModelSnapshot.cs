@@ -93,35 +93,6 @@ namespace BulkyWeb.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "New York",
-                            Name = "Navillus",
-                            PostalCode = "10017",
-                            State = "NY",
-                            StreetAddress = "633 3rd avenue"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Queens",
-                            Name = "Peters",
-                            PostalCode = "11101",
-                            State = "NY",
-                            StreetAddress = "300 40th street"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Brooklyn",
-                            Name = "Best Sandwich",
-                            PostalCode = "24687",
-                            State = "NY",
-                            StreetAddress = "333 3rd street"
-                        });
                 });
 
             modelBuilder.Entity("Bulky.Models.Product", b =>

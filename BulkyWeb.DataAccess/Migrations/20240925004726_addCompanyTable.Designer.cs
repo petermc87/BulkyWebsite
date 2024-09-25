@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyWeb.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240922071028_AddSeedToCompaniesDb")]
-    partial class AddSeedToCompaniesDb
+    [Migration("20240925004726_addCompanyTable")]
+    partial class addCompanyTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,35 +96,6 @@ namespace BulkyWeb.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "New York",
-                            Name = "Navillus",
-                            PostalCode = "10017",
-                            State = "NY",
-                            StreetAddress = "633 3rd avenue"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Queens",
-                            Name = "Peters",
-                            PostalCode = "11101",
-                            State = "NY",
-                            StreetAddress = "300 40th street"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Brooklyn",
-                            Name = "Best Sandwich",
-                            PostalCode = "24687",
-                            State = "NY",
-                            StreetAddress = "333 3rd street"
-                        });
                 });
 
             modelBuilder.Entity("Bulky.Models.Product", b =>

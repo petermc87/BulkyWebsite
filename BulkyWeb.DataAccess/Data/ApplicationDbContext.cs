@@ -124,12 +124,12 @@ namespace BulkyWeb.DataAccess.Data
 
 
 
-            // Seed data for Companies
-            modelBuilder.Entity<Company>().HasData(
-                new Company { Id = 1, Name = "Navillus", StreetAddress = "633 3rd avenue", City = "New York", State = "NY", PostalCode = "10017" },
-                new Company { Id = 2, Name = "Peters", StreetAddress = "300 40th street", City = "Queens", State = "NY", PostalCode = "11101" },
-                new Company { Id = 3, Name = "Best Sandwich", StreetAddress = "333 3rd street", City = "Brooklyn", State = "NY", PostalCode = "24687" }
-                );
+            //// Seed data for Companies
+            //modelBuilder.Entity<Company>().HasData(
+            //    new Company { Id = 1, Name = "Navillus", StreetAddress = "633 3rd avenue", City = "New York", State = "NY", PostalCode = "10017", PhoneNumber = "123 456 7890" },
+            //    new Company { Id = 2, Name = "Peters", StreetAddress = "300 40th street", City = "Queens", State = "NY", PostalCode = "11101", PhoneNumber = "123 456 7890" },
+            //    new Company { Id = 3, Name = "Best Sandwich", StreetAddress = "333 3rd street", City = "Brooklyn", State = "NY", PostalCode = "24687", PhoneNumber = "123 456 7890" }
+            //    );
         }
     }
 }
