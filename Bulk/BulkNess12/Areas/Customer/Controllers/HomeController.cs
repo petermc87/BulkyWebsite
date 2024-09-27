@@ -45,7 +45,24 @@ namespace BulkNess12.Areas.Customer.Controllers
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = userId;
 
-            _unitOfWork.ShoppingCart.Add(shoppingCart);
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+
+            if(cartFromDb != null)
+            {
+                // Shopping cart exists
+                cartFromDb.Count += shoppingCart.Count;
+                // Pass in the current cart to be updated.
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+
+            }
+            else
+            {
+                // add cart  record
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+
+
             _unitOfWork.Save();
 
 
