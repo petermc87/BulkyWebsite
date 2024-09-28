@@ -39,9 +39,19 @@ namespace BulkyWeb.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
             IQueryable<T> query = dbSet;
+            if (tracked)
+            {
+                query = dbSet;
+
+            } else
+            {
+
+               query = dbSet.AsNoTracking();
+
+            }
             query = query.Where(filter); // <-- Filtering one record from the the dbset
                                          // If there are includes, include them
             if (!string.IsNullOrEmpty(includeProperties))
