@@ -68,10 +68,15 @@ namespace BulkyWeb.DataAccess.Repository
         // -- Below is the comma separate string that gets passed in to the get all function.
 
         //Category,CoverType
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter ,string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-
+            // This is saying that if it is only retrieving a set of categories and not all of them.
+            if(filter !=null)
+            {
+                query = query.Where(filter);
+            }
+            
             // If there are includes, include them
             if (!string.IsNullOrEmpty(includeProperties))
             {
