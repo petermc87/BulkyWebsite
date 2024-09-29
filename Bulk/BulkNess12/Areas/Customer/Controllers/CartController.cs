@@ -38,6 +38,10 @@ namespace BulkNess12.Areas.Customer.Controllers
             return View(ShoppingCartVM);
         }
 
+        public IActionResult Summary()
+        {
+            return View();
+        }
 
         // Cart update action methods.
         public IActionResult Plus(int cartId)
