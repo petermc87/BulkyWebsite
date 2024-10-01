@@ -18,6 +18,10 @@ namespace BulkyWeb.DataAccess.Repository
 
         IShoppingCartRepository ShoppingCart { get; }
         IApplicationUserRepository ApplicationUser { get; }
+
+        IOrderDetailRepository OrderDetail { get; }
+
+        IOrderHeaderRepository OrderHeader { get; }
         void Save();
 
     }
