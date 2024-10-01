@@ -25,13 +25,14 @@ namespace BulkNess12.Areas.Customer.Controllers
 
             ShoppingCartVM = new()
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product")
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product"),
+                OrderHeader = new()
             };
             // Indexing the cart in the VM list and adding the cart total based on the pricing parameters
             foreach(var cart in ShoppingCartVM.ShoppingCartList)
             {
                cart.Price = GetPriceBasedOnQuantity(cart);
-                ShoppingCartVM.OrderTotal += (cart.Price * cart.Count);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
 
             }
 
