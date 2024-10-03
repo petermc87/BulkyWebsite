@@ -4,6 +4,8 @@ using BulkyWeb.DataAccess.Repository;
 using Bulky.Models.ViewModels;
 using System.Security.Claims;
 using Bulky.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Bulky.Utility;
 namespace BulkNess12.Areas.Customer.Controllers
 {
     [Area("customer")]
@@ -12,6 +14,10 @@ namespace BulkNess12.Areas.Customer.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
+
+        // The shoppingcart vm that is populated with the values from the ApplicationUser is bound to this ShoppinvgCartVM to be
+        // used in the Post IActionMethod.
+        [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
         public CartController(IUnitOfWork unitOfWork)
         {
@@ -73,6 +79,73 @@ namespace BulkNess12.Areas.Customer.Controllers
             return View(ShoppingCartVM);
 
         }
+
+        [HttpPost]
+        // Here, the Summary get is separated from the Post action.
+        [ActionName("Summary")]
+        public IActionResult SummaryPOST()
+        {
+            // Get the user
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUser.Id == userId, includeProperties: "Products");
+
+
+            ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
+            ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
+
+            // NOTE: No mapping like in the previous action method because the user details will be auto populated.
+            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+
+
+
+			// Indexing the cart in the VM list and adding the cart total based on the pricing parameters
+			foreach (var cart in ShoppingCartVM.ShoppingCartList)
+			{
+				cart.Price = GetPriceBasedOnQuantity(cart);
+				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+
+			}
+
+            if(ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0){
+                // it is regular customer account and payment needs to be captured
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+            } else {
+                // it is a company user
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+            }
+
+
+
+
+            // Create order header
+            _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
+            _unitOfWork.Save();
+
+
+            // Save order details to db for each item in the shopping cart.
+            foreach (var cart in ShoppingCartVM.ShoppingCartList) {
+                OrderDetail orderDetail = new()
+                {
+                    ProductId = cart.ProductId,
+                    OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
+                    Price = cart.Price,
+                    Count = cart.Count
+
+                };
+                _unitOfWork.OrderDetail.Add(orderDetail);
+                _unitOfWork.Save();
+            }
+
+
+			return View(ShoppingCartVM);
+        }
+
+
 
         // Cart update action methods.
         public IActionResult Plus(int cartId)
