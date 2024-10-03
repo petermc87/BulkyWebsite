@@ -90,14 +90,16 @@ namespace BulkNess12.Areas.Customer.Controllers
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 
-            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUser.Id == userId, includeProperties: "Products");
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUser.Id == userId, includeProperties: "Product");
 
 
             ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
             // NOTE: No mapping like in the previous action method because the user details will be auto populated.
-            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+            // ALSO NOTE: Create a new applicationUser object because the original object is a navigation object.
+            // You cannot use a navigation with a new object being submitted.
+            ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
 
 
@@ -109,7 +111,7 @@ namespace BulkNess12.Areas.Customer.Controllers
 
 			}
 
-            if(ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0){
+            if(applicationUser.CompanyId.GetValueOrDefault() == 0){
                 // it is regular customer account and payment needs to be captured
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
@@ -141,10 +143,20 @@ namespace BulkNess12.Areas.Customer.Controllers
                 _unitOfWork.Save();
             }
 
+            if(applicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                // This will be reg customer because the company Id is 0
+                // Stripe logic is added here.
 
-			return View(ShoppingCartVM);
+            }
+
+			return RedirectToAction(nameof(OrderConfirmation), new { id=ShoppingCartVM.OrderHeader.Id});
         }
 
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
+        }
 
 
         // Cart update action methods.
