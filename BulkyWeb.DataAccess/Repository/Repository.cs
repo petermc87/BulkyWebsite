@@ -86,10 +86,10 @@ namespace BulkyWeb.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
-            
-            return query.ToList(); // <-- Putting all the records into a list
 
-        }
+			return query.ToList(); // <-- Putting all the records into a list
+
+		}
 
         public void Remove(T entity)
         {
