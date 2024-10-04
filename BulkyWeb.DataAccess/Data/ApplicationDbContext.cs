@@ -22,7 +22,7 @@ namespace BulkyWeb.DataAccess.Data
 
         public DbSet<OrderDetail> OrderDetail { get; set; }
 
-        public DbSet<OrderHeader> OrderHeader { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
 
         //Default entity framework builder for seeding
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
