@@ -143,12 +143,13 @@ namespace BulkNess12.Areas.Customer.Controllers
                 _unitOfWork.Save();
             }
 
+            // CUSTOMER PAYMENT - STRIPE
             if(applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
-                // This will be reg customer because the company Id is 0
-                // Stripe logic is added here.
+				// This will be reg customer because the company Id is 0
+				// Stripe logic is added here.
 
-            }
+			}
 
 			return RedirectToAction(nameof(OrderConfirmation), new { id=ShoppingCartVM.OrderHeader.Id});
         }
