@@ -196,6 +196,37 @@ namespace BulkNess12.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            // Retrieve order header
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
+
+            // Basically if the status is not delayed, then its can be processed further
+            if(orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                // This is a customer order
+                // Create a session
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                // Checking the payment status in relation to the Stripe "Payment Status" in Create a Session section.
+                if(session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+            }
+
+            // Retrieving everything in the shopping list
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
+                .GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+
+
+
+            // Removing the shopping list
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save()
+
+
             return View(id);
         }
 
