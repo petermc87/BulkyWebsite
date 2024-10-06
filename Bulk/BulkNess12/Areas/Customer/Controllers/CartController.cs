@@ -210,7 +210,7 @@ namespace BulkNess12.Areas.Customer.Controllers
                 // Checking the payment status in relation to the Stripe "Payment Status" in Create a Session section.
                 if(session.PaymentStatus.ToLower() == "paid")
                 {
-                    _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, session.Id, session.PaymentIntentId);
                     _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
@@ -224,7 +224,7 @@ namespace BulkNess12.Areas.Customer.Controllers
 
             // Removing the shopping list
             _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
-            _unitOfWork.Save()
+            _unitOfWork.Save();
 
 
             return View(id);
