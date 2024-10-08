@@ -1,13 +1,48 @@
 ﻿var dataTable;
 
 $(document).ready(function () {
-    loadDataTable();
-})
+    // Grabbing the complete URL in the search bar
+    var url = window.location.search;
 
 
-function loadDataTable(){
+    if (url.includes("inprocess")) {
+        loadDataTable("inprocess");
+    } else {
+        if (url.includes("pending")) {
+            loadDataTable("pending");
+        }
+        else {
+            if (url.includes("completed")) {
+                loadDataTable("completed");
+            }
+            else {
+                if (url.includes("approved")) {
+                    loadDataTable("approved");
+                }
+                else {
+                    loadDataTable("all")
+                }
+            }
+        }
+    }
+});
+
+  ///-- ALTERNATIVE IF ELSE BLOCK TO TEST --/// 
+//if (url.includes("inprocess")) {
+//    loadDataTable("inprocess");
+//} else if (url.includes("pending")) {
+//    loadDataTable("pending")
+//} else if (url.includes("completed")) {
+//    loadDataTable("completed")
+//} else if (url.includes("approved")) {
+//    loadDataTable("approved")
+//} else {
+//    loadDataTable("all")
+//}
+
+function loadDataTable(status){
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/admin/order/getall' },
+        "ajax": { url: '/admin/order/getall?status=' + status },
         "columns": [
             { data: 'id', 'width': '25%' },
             { data: 'name', 'width': '15%' },

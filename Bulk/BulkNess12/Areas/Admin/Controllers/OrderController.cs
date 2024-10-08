@@ -1,6 +1,7 @@
 ﻿using BulkyWeb.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Bulky.Models;
+using Bulky.Utility;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
@@ -25,10 +26,29 @@ namespace BulkNess12.Areas.Admin.Controllers
 		#region API CALLS
 
 		[HttpGet]
-		public IActionResult GetAll()
+		public IActionResult GetAll(string status)
 		{
 			// Retrieving the orderheader list.
-			List<OrderHeader> objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+			IEnumerable<OrderHeader> objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+			
+			switch(status)
+			{
+				case "pending":
+					objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusDelayedPayment);
+					break;
+                case "inprocess":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusInProcess);
+                    break;
+                case "completed":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusShipped);
+                    break;
+                case "approved":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusApproved);
+                    break;
+				default:
+					break;
+
+            }
 			return Json(new { data = objOrderHeaders});
 		}
 
