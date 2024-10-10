@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Bulky.Models;
 using Bulky.Utility;
+using Bulky.Models.ViewModels;
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
@@ -22,10 +23,20 @@ namespace BulkNess12.Areas.Admin.Controllers
 			return View();
 		}
 
-		// Using datatables.net to retrieve data from an API
-		#region API CALLS
+        public IActionResult Details(int orderId)
+        {
+			OrderVM orderVM = new ()
+			{
+				OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
+				OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
+			};
+            return View(orderVM);
+        }
 
-		[HttpGet]
+        // Using datatables.net to retrieve data from an API
+        #region API CALLS
+
+        [HttpGet]
 		public IActionResult GetAll(string status)
 		{
 			// Retrieving the orderheader list.
