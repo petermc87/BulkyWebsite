@@ -25,7 +25,7 @@ namespace BulkNess12.Areas.Admin.Controllers
 
         public IActionResult Details(int orderId)
         {
-			OrderVM orderVM = new ()
+			OrderVM orderVM = new()
 			{
 				OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
 				OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
