@@ -3,14 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using Bulky.Models;
 using Bulky.Utility;
 using Bulky.Models.ViewModels;
+// It was not picking up Authorize attribute from the package so I created
+// a custom variable. There is a conflict somewhere!!
+using AuthAttribute = Microsoft.AspNetCore.Authorization;
+
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	public class OrderController : Controller
 	{
-		private readonly IUnitOfWork _unitOfWork;
-
+        // Binds form data to the OrderVM property automatically during POST requests, 
+        // eliminating the need to pass OrderVM as a parameter in action methods.
+        private readonly IUnitOfWork _unitOfWork;
+		[BindProperty]
+		public OrderVM OrderVM { get; set; }
 
 		// Generating a class and passing in a variable called unitOfwork with a type IUnitOfWork
 		public OrderController(IUnitOfWork unitOfWork)
@@ -25,13 +32,45 @@ namespace BulkNess12.Areas.Admin.Controllers
 
         public IActionResult Details(int orderId)
         {
-			OrderVM orderVM = new()
+			OrderVM = new()
 			{
 				OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
 				OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
 			};
-            return View(orderVM);
+            return View(OrderVM);
         }
+
+
+		[HttpPost]
+        [AuthAttribute.Authorize(Roles = SD.Role_Admin+","+SD.Role_Employee)]
+        public IActionResult UpdateOrderDetail()
+        {
+			var orderHeaderFromDb = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+			orderHeaderFromDb.Name = OrderVM.OrderHeader.Name;
+            orderHeaderFromDb.PhoneNumber = OrderVM.OrderHeader.PhoneNumber;
+            orderHeaderFromDb.StreetAddress = OrderVM.OrderHeader.StreetAddress;
+            orderHeaderFromDb.City = OrderVM.OrderHeader.City;
+            orderHeaderFromDb.State = OrderVM.OrderHeader.State;
+            orderHeaderFromDb.PostalCode = OrderVM.OrderHeader.PostalCode;
+
+			//These will only be updated if the field is empty.
+			if (!string.IsNullOrEmpty(OrderVM.OrderHeader.Carrier))
+			{
+				orderHeaderFromDb.Carrier = OrderVM.OrderHeader.Carrier;
+			}
+			if (!string.IsNullOrEmpty(OrderVM.OrderHeader.TrackingNumber))
+			{
+				orderHeaderFromDb.TrackingNumber = OrderVM.OrderHeader.TrackingNumber;
+			}
+
+			_unitOfWork.OrderHeader.Update(orderHeaderFromDb);
+			_unitOfWork.Save();
+
+			TempData["Success"] = "Order Details Updated Successfully.";
+
+			return RedirectToAction(nameof(Details), new {orderId=orderHeaderFromDb.Id});
+        }
+
 
         // Using datatables.net to retrieve data from an API
         #region API CALLS
