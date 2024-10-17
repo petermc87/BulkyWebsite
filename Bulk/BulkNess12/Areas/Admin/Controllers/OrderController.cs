@@ -6,11 +6,13 @@ using Bulky.Models.ViewModels;
 // It was not picking up Authorize attribute from the package so I created
 // a custom variable. There is a conflict somewhere!!
 using AuthAttribute = Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 namespace BulkNess12.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+
 	public class OrderController : Controller
 	{
         // Binds form data to the OrderVM property automatically during POST requests, 
@@ -78,10 +80,27 @@ namespace BulkNess12.Areas.Admin.Controllers
         [HttpGet]
 		public IActionResult GetAll(string status)
 		{
-			// Retrieving the orderheader list.
-			IEnumerable<OrderHeader> objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+            // Creating a list called objOrderHeaders of type OrderHeaders.
+            IEnumerable<OrderHeader> objOrderHeaders;
 			
-			switch(status)
+
+			if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee)){
+				// Get all the order headers that are either admin or employee
+				objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+			}
+			else
+			{
+
+                // Grabbing the userid.
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                objOrderHeaders = _unitOfWork.OrderHeader.GetAll(u => u.ApplicationUserId == userId, includeProperties: "ApplicationUser");
+
+            }
+
+
+            switch (status)
 			{
 				case "pending":
 					objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusDelayedPayment);
