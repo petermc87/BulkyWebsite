@@ -12,7 +12,7 @@ using System.Security.Claims;
 namespace BulkNess12.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-
+	[Authorize]
 	public class OrderController : Controller
 	{
         // Binds form data to the OrderVM property automatically during POST requests, 
@@ -74,6 +74,16 @@ namespace BulkNess12.Areas.Admin.Controllers
         }
 
 
+		[HttpPost]
+		[AuthAttribute.Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+
+		public IActionResult StartProcessing()
+		{
+			_unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, SD.StatusInProcess);
+			_unitOfWork.Save();
+			TempData["Success"] = "Order successfully updated";
+			return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+		}
         // Using datatables.net to retrieve data from an API
         #region API CALLS
 
