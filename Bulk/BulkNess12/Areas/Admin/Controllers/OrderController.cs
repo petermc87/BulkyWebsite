@@ -84,6 +84,29 @@ namespace BulkNess12.Areas.Admin.Controllers
 			TempData["Success"] = "Order successfully updated";
 			return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
 		}
+
+
+        [HttpPost]
+        [AuthAttribute.Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+
+        public IActionResult ShipOrder()
+        {
+			// Header needs to be retrieved so all the data can be updated.
+			var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+			orderHeader.TrackingNumber = OrderVM.OrderHeader.TrackingNumber;
+			orderHeader.Carrier = OrderVM.OrderHeader.Carrier;
+			orderHeader.OrderStatus = SD.StatusShipped;
+			orderHeader.ShippingDate = DateTime.Now;
+			if(orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment)
+			{
+				orderHeader.PaymentDueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(30));
+			}
+
+            _unitOfWork.OrderHeader.Update(orderHeader);
+            _unitOfWork.Save();
+            TempData["Success"] = "Order shipped successfully";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+        }
         // Using datatables.net to retrieve data from an API
         #region API CALLS
 
