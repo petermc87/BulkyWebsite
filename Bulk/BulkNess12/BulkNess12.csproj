@@ -32,6 +32,7 @@
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Create.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Test.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Order\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_Notification.cshtml" />
   </ItemGroup>
 
@@ -74,6 +75,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Areas\Admin\Views\Order\Details.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
   </ItemGroup>
 
 </Project>
