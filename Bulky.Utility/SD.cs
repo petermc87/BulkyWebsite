@@ -28,5 +28,8 @@ namespace Bulky.Utility
         public const string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
         public const string PaymentStatusRejected = "Rejected";
 
+
+        // Session 
+        public const string SessionCart = "SessionShoppingCart";
     }
 }
