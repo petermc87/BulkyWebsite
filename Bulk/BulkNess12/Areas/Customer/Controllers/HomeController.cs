@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using Bulky.Utility;
 
 namespace BulkNess12.Areas.Customer.Controllers
 {
@@ -54,12 +55,16 @@ namespace BulkNess12.Areas.Customer.Controllers
                 cartFromDb.Count += shoppingCart.Count;
                 // Pass in the current cart to be updated.
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
-
+                _unitOfWork.Save();
             }
             else
             {
                 // add cart  record
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+                // Getting the count of distinct items the users have.
+                // NOTE: The GellAll will all carts
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
             }
 
             TempData["success"] = "Cart updated successfully";

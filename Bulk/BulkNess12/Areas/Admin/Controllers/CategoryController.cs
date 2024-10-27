@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 namespace BulkNess12.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[AuthAttribute.Authorize(Roles = SD.Role_Admin)]
+    [AuthAttribute.Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
 
