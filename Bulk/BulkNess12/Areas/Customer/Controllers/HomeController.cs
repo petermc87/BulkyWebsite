@@ -23,19 +23,7 @@ namespace BulkNess12.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            // For getting the user logged in.
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            if(claim != null)
-                // If the claim returned a logged in user
-                // NOTE: This is for seeing the shopping cart count in the nav.
-            {
-                HttpContext.Session.SetInt32(SD.SessionCart, 
-                    // Checking if the shopping cart ApplicationUser is equal to the claim user
-                    _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).Count());
-
-            }
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
             return View(productList);
         }
