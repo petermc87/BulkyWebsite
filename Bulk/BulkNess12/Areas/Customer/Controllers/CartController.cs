@@ -234,7 +234,9 @@ namespace BulkNess12.Areas.Customer.Controllers
         // Cart update action methods.
         public IActionResult Plus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, tracked: true);
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() + 1);
+
             cartFromDb.Count += 1;
             _unitOfWork.ShoppingCart.Update(cartFromDb);
             _unitOfWork.Save();
@@ -244,9 +246,11 @@ namespace BulkNess12.Areas.Customer.Controllers
 
         public IActionResult Minus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, tracked: true);
            // If item is 1, the we remove from cart
            if(cartFromDb.Count <= 1) {
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+
                 _unitOfWork.ShoppingCart.Remove(cartFromDb);
             } else
             {
@@ -261,8 +265,12 @@ namespace BulkNess12.Areas.Customer.Controllers
 
         public IActionResult Remove(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId,tracked:true);
+            // This will remove a number from the cart count on the nav bar when an item/qty is decremented.
+            // NOTE: This is accessing the session data.
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCart.Remove(cartFromDb);
+
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }

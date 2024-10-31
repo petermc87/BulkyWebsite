@@ -26,6 +26,8 @@ namespace BulkNess12.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
+            // Clearing the session data on log out (this allows the cart to be reset to zero)
+            HttpContext.Session.Clear();
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
