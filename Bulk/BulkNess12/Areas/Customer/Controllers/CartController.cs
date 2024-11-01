@@ -214,6 +214,8 @@ namespace BulkNess12.Areas.Customer.Controllers
                     _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
+                // Clear the session once the order has been placed (this will mean the number beside the cart dissapears)
+                HttpContext.Session.Clear();
             }
 
             // Retrieving everything in the shopping list
