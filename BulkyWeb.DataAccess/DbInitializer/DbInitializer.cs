@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Bulky.Models;
+using Bulky.Utility;
 using BulkyWeb.DataAccess.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +20,10 @@ namespace BulkyWeb.DataAccess.DbInitializer
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _db;
 
-        public DbInitiliazer(
+        public DbInitializer(
             UserManager<IdentityUser> userManager,
-            RoleManager<IdentityUser> roleManager,
-            ApplcationDbContext db)
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -34,11 +35,11 @@ namespace BulkyWeb.DataAccess.DbInitializer
             // create migrations if not created
             try
             {
-                if(_db.Database.GetPendingMigrations().Count() > 0)){
+                if(_db.Database.GetPendingMigrations().Count() > 0){
                     _db.Database.Migrate();
-                }
+                };
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
             }
             // create roles if there ARE not ccreated
