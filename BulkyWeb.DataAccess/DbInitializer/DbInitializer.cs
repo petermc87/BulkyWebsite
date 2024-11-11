@@ -30,18 +30,25 @@ namespace BulkyWeb.DataAccess.DbInitializer
             _db = db;
         }
         public void Initialize()
-        {
 
-            // create migrations if not created
-            try
+        {
+            RemoveSeedData();
+            SeedData();
+        }
+        public void RemoveSeedData()
+        {
+            foreach(var role in _db.Roles.ToList())
             {
-                if(_db.Database.GetPendingMigrations().Count() > 0){
-                    _db.Database.Migrate();
-                };
+                _roleManager.DeleteAsync(role).GetAwaiter().GetResult();
             }
-            catch (Exception ex)
+            foreach(var user in _db.Users.ToList())
             {
+                _userManager.DeleteAsync(user).GetAwaiter().GetResult();
             }
+            _db.SaveChanges();
+        }
+        public void SeedData()
+        {
             // create roles if there ARE not ccreated
             if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
             {
@@ -51,8 +58,8 @@ namespace BulkyWeb.DataAccess.DbInitializer
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
 
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
-                // if users are not create we will need to create new.
-                _userManager.CreateAsync(new ApplicationUser
+
+                var adminUser = new ApplicationUser
                 {
                     UserName = "admin@petermc.com",
                     Email = "admin@petermc.com",
@@ -62,14 +69,19 @@ namespace BulkyWeb.DataAccess.DbInitializer
                     State = "New York",
                     PostalCode = "11113",
                     City = "Astoria",
-                }, "Admin123*").GetAwaiter().GetResult();
+                    EmailConfirmed = true,
+                };
 
-                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@petermc.com");
-                _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
+                var createResult = _userManager.CreateAsync(adminUser, "Admin123*").GetAwaiter().GetResult();
+
+                if (createResult.Succeeded)
+                {
+                    adminUser.EmailConfirmed = true;
+                    _db.SaveChanges();
+                    _userManager.AddToRoleAsync(adminUser, SD.Role_Admin).GetAwaiter().GetResult();
+                }
             }
 
-
-            return;
         }
     }
 }
