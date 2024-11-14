@@ -64,7 +64,6 @@ function loadDataTable(status){
                                 <a href="/admin/order/details?orderId=${data}" class="btn btn-primary mx-2">    
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-
                             </div>`
                 },
 
