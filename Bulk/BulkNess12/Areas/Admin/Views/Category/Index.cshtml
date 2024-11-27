@@ -1,0 +1,68 @@
+﻿@model List<Category> // <--> This is the list recieved from CategoryController.cs, in typed format.
+<partial name="_Notification"/>
+@* Wrapper container *@
+
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">Category List</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+        @* Creating row with padding on top *@
+            <div class="row pt-4 pb-3">
+            @* This container represents the first 6 rows *@
+                <div class="col-6">
+
+                </div>
+            @* This container represents the last 6 rows *@
+                <div class="col-6 text-end">
+                @* Create category button *@
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Create Category
+                    </a>
+                   
+                </div>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Category Name
+                        </th>
+                        <th>
+                            Display Order
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                @* This is how you retrieve the list and loop in C# *@
+                @foreach (var obj in Model.OrderBy(u => u.DisplayOrder)) // <-- Here we are ordering the list by display order precendence.
+                {
+                        <tr>
+                            <td>
+                            @obj.Name
+                            </td>
+                            <td>
+                            @obj.DisplayOrder
+                            </td>
+                            <td>
+                            @* NOTE: The asp-route-id passes the id of this category to the edit controller. *@
+                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i>Edit
+                                </a>
+                                <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i>Delete
+                                </a>
+                            </td>
+                        </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
